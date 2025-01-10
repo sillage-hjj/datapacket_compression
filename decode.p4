@@ -46,7 +46,8 @@ control MyIngress(inout headers hdr,
 		size=1024;
 		default_action=drop();
 	}
-
+	/*****divid neiber number and separete them into group, each group contain 16 item ******/
+	/*****this design ensure that transmission error only affect current window*/
 	action mac_learn(){
 		bit<48> tmp;
 		couns.read(meta.learn.count, 0);
@@ -69,165 +70,170 @@ control MyIngress(inout headers hdr,
 		timestamp_tmp.write(0, standard_metadata.ingress_global_timestamp);
 	}
 
-	action set_packet_huffman_0(bit<3> huffman) {
-		meta.learn.packet_huffman = huffman;
-		meta.learn.packet_extension = 0;  // 仅1个包长度，不需要扩展码
+	action set_huffman_bit_0(bit<3> huffman) {
+		meta.learn.huffman_bit = huffman;
+		meta.learn.extension_bit = 0;  // 仅1个包长度，不需要扩展码
 	}
 
-	action set_packet_huffman_1(bit<4> huffman) {
-		meta.learn.packet_huffman = huffman;
-		meta.learn.packet_extension = 0;  // 仅1个包长度，不需要扩展码
+	action set_huffman_bit_1(bit<4> huffman) {
+		meta.learn.huffman_bit = huffman;
+		meta.learn.extension_bit = 0;  // 仅1个包长度，不需要扩展码
 	}
 
-	action set_packet_huffman_2(bit<2> huffman) {
-		meta.learn.packet_huffman = huffman;
-		meta.learn.packet_extension = 0;  // 仅1个包长度，不需要扩展码
+	action set_huffman_bit_2(bit<2> huffman) {
+		meta.learn.huffman_bit = huffman;
+		meta.learn.extension_bit = 0;  // 仅1个包长度，不需要扩展码
 	}
 
-	action set_packet_huffman_3(bit<2> huffman) {
-		meta.learn.packet_huffman = huffman;
-		meta.learn.packet_extension = 0;  // 仅1个包长度，不需要扩展码
+	action set_huffman_bit_3(bit<2> huffman) {
+		meta.learn.huffman_bit = huffman;
+		meta.learn.extension_bit = 0;  // 仅1个包长度，不需要扩展码
 	}
 
-	action set_packet_huffman_4(bit<5> huffman) {
-		meta.learn.packet_huffman = huffman;
-		meta.learn.packet_extension = 4;  // 使用4位扩展码
+	action set_huffman_bit_4(bit<5> huffman) {
+		meta.learn.huffman_bit = huffman;
+		meta.learn.extension_bit = standard_metadata.packet_length - 55;
+		meta.learn.extension_len = 4; // 使用4位扩展码
 	}
 
-	action set_packet_huffman_5(bit<3> huffman) {
-		meta.learn.packet_huffman = huffman;
-		meta.learn.packet_extension = 4;  // 使用4位扩展码
+	action set_huffman_bit_5(bit<3> huffman) {
+		meta.learn.huffman_bit = huffman;
+		meta.learn.extension_bit = standard_metadata.packet_length - 73;
+		meta.learn.extension_bit = 4;  // 使用4位扩展码
 	}
 
-	action set_packet_huffman_6(bit<4> huffman) {
-		meta.learn.packet_huffman = huffman;
-		meta.learn.packet_extension = 9;  // 使用9位扩展码
+	action set_huffman_bit_6(bit<4> huffman) {
+		meta.learn.huffman_bit = huffman;
+		meta.learn.extension_bit = standard_metadata.packet_length - 89;
+		meta.learn.extension_bit = 9;  // 使用9位扩展码
 	}
 
-	action set_packet_huffman_7(bit<4> huffman) {
-		meta.learn.packet_huffman = huffman;
-		meta.learn.packet_extension = 10;  // 使用10位扩展码
+	action set_huffman_bit_7(bit<4> huffman) {
+		meta.learn.huffman_bit = huffman;
+		if(standard_metadata.packet_length >= 1475) meta.learn.extension_bit = standard_metadata.packet_length - 602;
+		else meta.learn.extension_bit = standard_metadata.packet_length - 601;
+		meta.learn.extension_bit = 10;  // 使用10位扩展码
 	}
 
 
-	table packet_huffman_table_0 {
+	table huffman_bit_table_0 {
 		key = {
 			standard_metadata.packet_length: range;
 		}
 		actions = {
-			set_packet_huffman_0;
+			set_huffman_bit_0;
 		}
 		size = 1024;
 		default_action = NoAction;
 		
 		const entries = {
-			54: set_packet_huffman_0(0b000);
+			54: set_huffman_bit_0(0b000);
 		}
 	}
 
-	table packet_huffman_table_1 {
+	table huffman_bit_table_1 {
 		key = {
 			standard_metadata.packet_length: range;
 		}
 		actions = {
-			set_packet_huffman_1;
+			set_huffman_bit_1;
 		}
 		size = 1024;
 		default_action = NoAction;
 		
 		const entries = {
-			60: set_packet_huffman_1(0b1001);
+			60: set_huffman_bit_1(0b1001);
 		}
 	}
 
-	table packet_huffman_table_2 {
+	table huffman_bit_table_2 {
 		key = {
 			standard_metadata.packet_length: range;
 		}
 		actions = {
-			set_packet_huffman_2;
+			set_huffman_bit_2;
 		}
 		size = 1024;
 		default_action = NoAction;
 		
 		const entries = {
-			66: set_packet_huffman_2(0b01);
+			66: set_huffman_bit_2(0b01);
 		}
 	}
 
-	table packet_huffman_table_3 {
+	table huffman_bit_table_3 {
 		key = {
 			standard_metadata.packet_length: range;
 		}
 		actions = {
-			set_packet_huffman_3;
+			set_huffman_bit_3;
 		}
 		size = 1024;
 		default_action = NoAction;
 		
 		const entries = {
-			1474: set_packet_huffman_3(0b10);
+			1474: set_huffman_bit_3(0b10);
 		}
 	}
 
-	table packet_huffman_table_4 {
+	table huffman_bit_table_4 {
 		key = {
 			standard_metadata.packet_length: range;
 		}
 		actions = {
-			set_packet_huffman_4;
+			set_huffman_bit_4;
 		}
 		size = 1024;
 		default_action = NoAction;
 		
 		const entries = {
-			55..72: set_packet_huffman_4(0b00101);
+			55..72: set_huffman_bit_4(0b00101);
 		}
 	}
 
-	table packet_huffman_table_5 {
+	table huffman_bit_table_5 {
 		key = {
 			standard_metadata.packet_length: range;
 		}
 		actions = {
-			set_packet_huffman_5;
+			set_huffman_bit_5;
 		}
 		size = 1024;
 		default_action = NoAction;
 		
 		const entries = {
-			73..88: set_packet_huffman_5(0b101);
+			73..88: set_huffman_bit_5(0b101);
 		}
 	}
 
-	table packet_huffman_table_6 {
+	table huffman_bit_table_6 {
 		key = {
 			standard_metadata.packet_length: range;
 		}
 		actions = {
-			set_packet_huffman_6;
+			set_huffman_bit_6;
 		}
 		size = 1024;
 		default_action = NoAction;
 		
 		const entries = {
-			89..600: set_packet_huffman_6(0b1000);
+			89..600: set_huffman_bit_6(0b1000);
 		}
 	}
 
-	table packet_huffman_table_7 {
+	table huffman_bit_table_7 {
 		key = {
 			standard_metadata.packet_length: range;
 		}
 		actions = {
-			set_packet_huffman_7;
+			set_huffman_bit_7;
 		}
 		size = 1024;
 		default_action = NoAction;
 		
 		const entries = {
-			601..1473: set_packet_huffman_7(0b0011);
-			1475..1625: set_packet_huffman_7(0b0011);
+			601..1473: set_huffman_bit_7(0b0011);
+			1475..1625: set_huffman_bit_7(0b0011);
 		}
 	}
 
@@ -272,9 +278,7 @@ control MyIngress(inout headers hdr,
         meta.learn6.packet_length = meta.learn.packet_length;
         digest<learn_6t>(1, meta.learn6);
     }
-
-
-
+	
     table d_info {
         key = {
             meta.learn.time_stamps: range;
@@ -304,14 +308,14 @@ control MyIngress(inout headers hdr,
 
 	apply {
 		mac_learn();
-		packet_huffman_table_0.apply();
-		packet_huffman_table_1.apply();
-		packet_huffman_table_2.apply();
-		packet_huffman_table_3.apply();
-		packet_huffman_table_4.apply();
-		packet_huffman_table_5.apply();
-		packet_huffman_table_6.apply();
-		packet_huffman_table_7.apply();
+		huffman_bit_table_0.apply();
+		huffman_bit_table_1.apply();
+		huffman_bit_table_2.apply();
+		huffman_bit_table_3.apply();
+		huffman_bit_table_4.apply();
+		huffman_bit_table_5.apply();
+		huffman_bit_table_6.apply();
+		huffman_bit_table_7.apply();
 		d_info.apply();
 		if(hdr.ipv4.isValid()) {
 			ipv4_lpm.apply();
