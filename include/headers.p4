@@ -83,20 +83,20 @@ struct learn_t {
 }
 
 struct huffman_1t {
-    bit<3> huffman_bit;
+    bit<5> huffman_bit;
 }
 
 struct huffman_2t {
-    bit<3> huffman_bit;
+    bit<5> huffman_bit;
     bit<4> extension_bit;
 }
 
 struct huffman_3t {
-    bit<3> huffman_bit;
+    bit<5> huffman_bit;
     bit<9> extension_bit;
 }
 struct huffman_4t {
-    bit<3> huffman_bit;
+    bit<5> huffman_bit;
     bit<10> extension_bit;
 }
 
