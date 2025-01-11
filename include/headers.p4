@@ -102,104 +102,104 @@ struct huffman_4t {
 
 struct learn_11t {
     bit<8>  time_stamps;
-    huffman_1t haffman;
+    huffman_1t huffman;
 }
 struct learn_12t {
     bit<8>  time_stamps;
-    huffman_2t haffman;
+    huffman_2t huffman;
 }
 struct learn_13t {
     bit<8>  time_stamps;
-    huffman_3t haffman;
+    huffman_3t huffman;
 }
 struct learn_14t {
     bit<8>  time_stamps;
-    huffman_4t haffman;
+    huffman_4t huffman;
 }
 
 struct learn_21t {
     bit<16> time_stamps;
-    huffman_1t haffman;
+    huffman_1t huffman;
 }
 struct learn_22t {
     bit<16> time_stamps;
-    huffman_2t haffman;
+    huffman_2t huffman;
 }
 struct learn_23t {
     bit<16> time_stamps;
-    huffman_3t haffman;
+    huffman_3t huffman;
 }
 struct learn_24t {
     bit<16> time_stamps;
-    huffman_4t haffman;
+    huffman_4t huffman;
 }
 
 struct learn_31t {
     bit<24> time_stamps;
-    huffman_1t haffman;
+    huffman_1t huffman;
 }
 struct learn_32t {
     bit<24> time_stamps;
-    huffman_2t haffman;
+    huffman_2t huffman;
 }
 struct learn_33t {
     bit<24> time_stamps;
-    huffman_3t haffman;
+    huffman_3t huffman;
 }
 struct learn_34t {
     bit<24> time_stamps;
-    huffman_4t haffman;
+    huffman_4t huffman;
 }
 
 struct learn_41t {
     bit<30> time_stamps;
-    huffman_1t haffman;
+    huffman_1t huffman;
 }
 struct learn_42t {
     bit<30> time_stamps;
-    huffman_2t haffman;
+    huffman_2t huffman;
 }
 struct learn_43t {
     bit<30> time_stamps;
-    huffman_3t haffman;
+    huffman_3t huffman;
 }
 struct learn_44t {
     bit<30> time_stamps;
-    huffman_4t haffman;
+    huffman_4t huffman;
 }
 
 struct learn_51t {
     bit<36> time_stamps;
-    huffman_1t haffman;
+    huffman_1t huffman;
 }
 struct learn_52t {
     bit<36> time_stamps;
-    huffman_2t haffman;
+    huffman_2t huffman;
 }
 struct learn_53t {
     bit<36> time_stamps;
-    huffman_3t haffman;
+    huffman_3t huffman;
 }
 struct learn_54t {
     bit<36> time_stamps;
-    huffman_4t haffman;
+    huffman_4t huffman;
 }
 
 struct learn_61t {
     bit<42> time_stamps;
-    huffman_1t haffman;
+    huffman_1t huffman;
 }
 struct learn_62t {
     bit<42> time_stamps;
-    huffman_2t haffman;
+    huffman_2t huffman;
 }
 struct learn_63t {
     bit<42> time_stamps;
-    huffman_3t haffman;
+    huffman_3t huffman;
 }
 struct learn_64t {
     bit<42> time_stamps;
-    huffman_4t haffman;
+    huffman_4t huffman;
 }
 
 struct metadata {
