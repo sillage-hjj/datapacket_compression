@@ -26,17 +26,18 @@ class L2Controller:
                                                    json_path=sw_data['json_path'])
         
     def learn(self, learning_data):
-        for timestamp, packet_length in  learning_data:
-            print("timestamp: %d, packet length: %s." % (timestamp, packet_length))
+        for timestamp, huffman_bit, extension_bit in  learning_data:
+            print("timestamp: %d, packet length: %s." % (timestamp, huffman_bit, extension_bit))
             print("")
 
     def unpack_digest(self, dig_list):
         learning_data = []
         for dig in dig_list.data:
             time_stamps = int.from_bytes(dig.struct.members[0].bitstring, byteorder='big')
-            packet_length = int.from_bytes(dig.struct.members[1].bitstring, byteorder='big')
+            huffman_bit = int.from_bytes(dig.struct.members[1].bitstring, byteorder='big')
+            extension_bit = int.from_bytes(dig.struct.members[2].bitstring, byteorder='big')
             # count   =int.from_bytes(dig.struct.members[2].bitstring, byteorder='big')
-            learning_data.append((time_stamps, packet_length))
+            learning_data.append((time_stamps, huffman_bit, extension_bit))
         return learning_data
 
     def recv_msg_digest(self, dig_list):

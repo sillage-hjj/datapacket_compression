@@ -19,17 +19,17 @@ net.addP4RuntimeSwitch('s5')
 net.addP4RuntimeSwitch('s6')
 net.addP4RuntimeSwitch('s7')
 
-net.setP4Source('s1','p4src/ecmp.p4')
-net.setP4Source('s2','p4src/ecmp.p4')
-net.setP4Source('s3','p4src/ecmp.p4')
-net.setP4Source('s5','p4src/ecmp.p4')
-net.setP4Source('s6','p4src/ecmp.p4')
-net.setP4Source('s7','p4src/ecmp.p4')
+net.setP4Source('s1','p4src/data_noop.p4')
+net.setP4Source('s2','p4src/data_noop.p4')
+net.setP4Source('s3','p4src/data_noop.p4')
+net.setP4Source('s5','p4src/data_noop.p4')
+net.setP4Source('s6','p4src/data_noop.p4')
+net.setP4Source('s7','p4src/data_noop.p4')
 
 
 # net.setP4Source('s4','p4src/ecmp.p4')
-net.setP4Source('s4','p4src/ecmp_compression.p4')
-
+# net.setP4Source('s4','p4src/ecmp_compression.p4')
+net.setP4Source('s4', 'p4src/data_compression.p4')
 
 
 net.addHost('h1')
